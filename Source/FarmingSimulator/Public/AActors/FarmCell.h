@@ -37,7 +37,6 @@ protected:
 	EFarmCellState FarmCellState;
 	UPROPERTY(EditAnywhere,BlueprintReadWrite, Category = "FarmGrid")
 	UStaticMeshComponent* CellMesh;
-	
 	virtual void BeginPlay() override;
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 	UFUNCTION()
@@ -46,13 +45,13 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 	UFUNCTION(Reliable,Server)
-	void ServerWateringPlants();
+	void ServerWateringPlants(APlayerStateBase*PlayerStateBase);
 	UFUNCTION(Reliable,Server)
-	void ServerPlow();
+	void ServerPlow(APlayerStateBase*PlayerStateBase);
 	UFUNCTION(Reliable,Server)
-	void ServerSow();
+	void ServerSow(APlayerStateBase*PlayerStateBase);
 	UFUNCTION(Reliable,Server)
-	void ServerHarvest();
+	void ServerHarvest(APlayerStateBase*PlayerStateBase);
 	bool IsPlow() const { return bPlow; }
 	int32 GetWaterLevel() const { return WaterLevel; }
 	EFarmCellState GetPlantState() const { return FarmCellState; }

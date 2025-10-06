@@ -14,6 +14,7 @@
 
 AFarmerController::AFarmerController()
 {
+	FarmerBase = Cast<AFarmerBase>(UGameplayStatics::GetActorOfClass(GetWorld(), AFarmerBase::StaticClass()));
 }
 
 void AFarmerController::ShowFarmInfoWidget(int32 WaterLevel, bool bIsPlowed, float TimeToHarvest)
@@ -40,31 +41,10 @@ void AFarmerController::HideFarmInfoWidget()
 	}
 }
 
-void AFarmerController::ServerMoveTo_Implementation(FVector Location)
+void AFarmerController::MoveToLocation(FVector Location)
 {
-	APawn* MyPawn = GetPawn();
-	if (!MyPawn) return;
-
-	if (AAIController* AICon = Cast<AAIController>(MyPawn->GetController()))
-	{
-		FAIMoveRequest MoveReq;
-		MoveReq.SetGoalLocation(Location);
-		MoveReq.SetAcceptanceRadius(5.0f);
-
-		FNavPathSharedPtr NavPath;
-		FPathFollowingRequestResult Result = AICon->MoveTo(MoveReq, &NavPath);
-
-		if (Result.Code == EPathFollowingRequestResult::Failed)
-		{
-			UE_LOG(LogTemp, Warning, TEXT("MoveTo failed"));
-		}
-	}
-	else
-	{
-		UAIBlueprintHelperLibrary::SimpleMoveToLocation(this, Location);
-	}
+	
 }
-
 void AFarmerController::SetupInputComponent()
 {
 	Super::SetupInputComponent();

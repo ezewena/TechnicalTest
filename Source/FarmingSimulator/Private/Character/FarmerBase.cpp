@@ -4,6 +4,8 @@
 #include "Character/FarmerBase.h"
 
 #include "AIController.h"
+#include "Blueprint/AIBlueprintHelperLibrary.h"
+#include "Navigation/PathFollowingComponent.h"
 #include "Net/UnrealNetwork.h"
 
 // Sets default values
@@ -11,7 +13,20 @@ AFarmerBase::AFarmerBase()
 {
  	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
+	bReplicates = true;
+	bAlwaysRelevant = true;
+	
+}
 
+void AFarmerBase::MoveToLocation(FVector Location)
+{
+	UAIBlueprintHelperLibrary::SimpleMoveToLocation(GetController(), Location);
+
+}
+
+void AFarmerBase::ServerMoveToLocation_Implementation(FVector Location)
+{
+	MoveToLocation(Location);
 }
 
 void AFarmerBase::ServerInteractWithFarm_Implementation()

@@ -23,8 +23,8 @@ public:
 	void ShowFarmInfoWidget(int32 WaterLevel, bool bIsPlowed, float TimeToHarvest);
 	UFUNCTION(BlueprintCallable, Category="Farm")
 	void HideFarmInfoWidget();
-	UFUNCTION(Server, Reliable)
-	void ServerMoveTo(FVector Location);
+	UFUNCTION()
+	void MoveToLocation(FVector Location);
 	protected:
 	virtual void SetupInputComponent() override;
 	virtual void BeginPlay() override;

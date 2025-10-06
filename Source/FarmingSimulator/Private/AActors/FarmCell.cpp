@@ -3,6 +3,10 @@
 
 #include "AActors/FarmCell.h"
 
+#include "Blueprint/UserWidget.h"
+#include "GameFramework/GameStateBase.h"
+#include "PlayerState/PlayerStateBase.h"
+
 AFarmCell::AFarmCell()
 {
 	//Set Default Variables
@@ -13,13 +17,12 @@ AFarmCell::AFarmCell()
 	WaterLevel=0;
 	FarmCellState = EFarmCellState::Empty;
 	TimeToHarvest=0.0f;
-	
 }
+
 
 void AFarmCell::BeginPlay()
 {
 	Super::BeginPlay();
-	
 }
 
 void AFarmCell::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
@@ -42,33 +45,54 @@ void AFarmCell::Tick(float DeltaTime)
 
 }
 
-void AFarmCell::ServerHarvest_Implementation()
+void AFarmCell::ServerHarvest_Implementation(APlayerStateBase*PlayerStateBase)
 {
-	bPlow=true;
-}
-
-void AFarmCell::ServerSow_Implementation()
-{
-	if (bPlow && FarmCellState==EFarmCellState::Empty )
+	if (PlayerStateBase)
 	{
-		FarmCellState = EFarmCellState::Growing;
-		TimeToHarvest=10;
+		if (FarmCellState==EFarmCellState::ReadyToHarvest)
+		{
+			FarmCellState=EFarmCellState::Empty;
+			bPlow=false;
+			WaterLevel=0;
+			TimeToHarvest=0;
+			PlayerStateBase->Server_AddPlants(1);
+		}
 	}
+	
 }
 
-void AFarmCell::ServerPlow_Implementation()
+void AFarmCell::ServerSow_Implementation(APlayerStateBase*PlayerStateBase)
 {
-	if (FarmCellState==EFarmCellState::ReadyToHarvest)
+	if (PlayerStateBase)
 	{
-		FarmCellState=EFarmCellState::Empty;
-		bPlow=false;
-		WaterLevel=0;
-		TimeToHarvest=0;
+		if (bPlow && PlayerStateBase->GetSeeds()>0&& FarmCellState==EFarmCellState::Empty )
+		{
+			FarmCellState = EFarmCellState::Growing;
+			PlayerStateBase->Server_AddSeeds(-1);
+			TimeToHarvest=10;
+		}
 	}
+
 }
 
-void AFarmCell::ServerWateringPlants_Implementation()
+void AFarmCell::ServerPlow_Implementation(APlayerStateBase*PlayerStateBase)
 {
-	WaterLevel++;
+	if (!bPlow&&PlayerStateBase)
+	{
+		bPlow=true;
+	}
+
+}
+
+void AFarmCell::ServerWateringPlants_Implementation(APlayerStateBase*PlayerStateBase)
+{
+	if (PlayerStateBase)
+	{
+		if (PlayerStateBase->GetWater()>0)
+		{
+			WaterLevel++;
+			PlayerStateBase->Server_AddWater(-1);
+		}
+	}
 }
 

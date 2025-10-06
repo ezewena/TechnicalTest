@@ -15,7 +15,7 @@ class FARMINGSIMULATOR_API AFarmerBase : public ACharacter
 public:
 	// Sets default values for this character's properties
 	AFarmerBase();
-	UFUNCTION(BlueprintImplementableEvent)
+	UFUNCTION()
 	void MoveToLocation(FVector Location);
 	UPROPERTY(Replicated)
 	bool bIsBusy;
@@ -26,7 +26,8 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
-
+	UFUNCTION(Server, Reliable)
+	void ServerMoveToLocation(FVector Location);
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
