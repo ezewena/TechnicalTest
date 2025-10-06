@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "InteractiveActor.h"
+#include "Controllers/FarmerController.h"
 #include "GameFramework/Actor.h"
 #include "Net/UnrealNetwork.h" 
 #include "FarmCell.generated.h"
@@ -27,31 +28,29 @@ public:
 
 protected:
 	//Variables
-	UPROPERTY(ReplicatedUsing=OnRep_UpdateFarm,BlueprintReadWrite,EditAnywhere)
+	UPROPERTY(Replicated,BlueprintReadWrite,EditAnywhere)
 	bool bPlow;
-	UPROPERTY(ReplicatedUsing=OnRep_UpdateFarm,BlueprintReadWrite,EditAnywhere)
+	UPROPERTY(Replicated,BlueprintReadWrite,EditAnywhere)
 	int WaterLevel;
-	UPROPERTY(ReplicatedUsing=OnRep_UpdateFarm,BlueprintReadWrite,EditAnywhere)
+	UPROPERTY(Replicated,BlueprintReadWrite,EditAnywhere)
 	float TimeToHarvest;
-	UPROPERTY(ReplicatedUsing=OnRep_UpdateFarm,BlueprintReadWrite,EditAnywhere)
+	UPROPERTY(Replicated,BlueprintReadWrite,EditAnywhere)
 	EFarmCellState FarmCellState;
 	UPROPERTY(EditAnywhere,BlueprintReadWrite, Category = "FarmGrid")
 	UStaticMeshComponent* CellMesh;
 	virtual void BeginPlay() override;
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
-	UFUNCTION()
-	void OnRep_UpdateFarm();
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
-	UFUNCTION(Reliable,Server)
-	void ServerWateringPlants(APlayerStateBase*PlayerStateBase);
-	UFUNCTION(Reliable,Server)
-	void ServerPlow(APlayerStateBase*PlayerStateBase);
-	UFUNCTION(Reliable,Server)
-	void ServerSow(APlayerStateBase*PlayerStateBase);
-	UFUNCTION(Reliable,Server)
-	void ServerHarvest(APlayerStateBase*PlayerStateBase);
+	UFUNCTION(Reliable,Server,BlueprintCallable)
+	void ServerWateringPlants(APlayerStateBase*PlayerStateBase,AFarmerController*PC);
+	UFUNCTION(Reliable,Server,BlueprintCallable)
+	void ServerPlow(APlayerStateBase*PlayerStateBase,AFarmerController*PC);
+	UFUNCTION(Reliable,Server,BlueprintCallable)
+	void ServerSow(APlayerStateBase*PlayerStateBase,AFarmerController*PC);
+	UFUNCTION(Reliable,Server,BlueprintCallable)
+	void ServerHarvest(APlayerStateBase*PlayerStateBase,AFarmerController*PC);
 	bool IsPlow() const { return bPlow; }
 	int32 GetWaterLevel() const { return WaterLevel; }
 	EFarmCellState GetPlantState() const { return FarmCellState; }

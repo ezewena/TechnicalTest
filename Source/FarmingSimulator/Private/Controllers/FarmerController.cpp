@@ -17,6 +17,45 @@ AFarmerController::AFarmerController()
 	FarmerBase = Cast<AFarmerBase>(UGameplayStatics::GetActorOfClass(GetWorld(), AFarmerBase::StaticClass()));
 }
 
+void AFarmerController::MulticastMoveToLocation_Implementation(FVector Direction)
+{
+	if (FarmerBase)
+	{
+		FarmerBase->MoveToLocation(Direction);
+	}
+	
+}
+
+void AFarmerController::ServerMoveToLocation_Implementation(FVector Direction)
+{
+	if (HasAuthority())
+	{
+		if (!FarmerBase) return;
+		FarmerBase->MoveToLocation(Direction);
+		return;
+	}
+		MulticastMoveToLocation_Implementation(Direction);
+}
+
+void AFarmerController::ServerPlayMontage_Implementation(UAnimMontage* Montage)
+{
+	if (HasAuthority())
+	{
+		if (!FarmerBase)return; 
+		FarmerBase->PlayAnimMontage(Montage);
+		return;
+	}
+	MulticastPlayMontage(Montage);
+}
+
+void AFarmerController::MulticastPlayMontage_Implementation(UAnimMontage* Montage)
+{
+	if (FarmerBase)
+	{
+		FarmerBase->PlayAnimMontage(Montage);
+	}
+}
+
 void AFarmerController::ShowFarmInfoWidget(int32 WaterLevel, bool bIsPlowed, float TimeToHarvest)
 {
 	if (!FarmInfoWidgetInstance && FarmInfoWidgetClass)
@@ -33,6 +72,22 @@ void AFarmerController::ShowFarmInfoWidget(int32 WaterLevel, bool bIsPlowed, flo
 	}
 }
 
+void AFarmerController::ShowFarmActionsWidget(AFarmCell*FarmCell)
+{
+	if (!FarmActionsWidgetInstance && FarmActionsWidgetClass)
+	{
+		FarmActionsWidgetInstance = CreateWidget<UFarmActionsToDo>(this, FarmActionsWidgetClass);
+		if (FarmActionsWidgetInstance)
+			FarmActionsWidgetInstance->AddToViewport();
+	}
+
+	if (FarmActionsWidgetInstance)
+	{
+		FarmActionsWidgetInstance->SetVisibility(ESlateVisibility::Visible);
+		FarmActionsWidgetInstance->FarmCellRef = FarmCell;
+	}
+}
+
 void AFarmerController::HideFarmInfoWidget()
 {
 	if (FarmInfoWidgetInstance)
@@ -41,10 +96,6 @@ void AFarmerController::HideFarmInfoWidget()
 	}
 }
 
-void AFarmerController::MoveToLocation(FVector Location)
-{
-	
-}
 void AFarmerController::SetupInputComponent()
 {
 	Super::SetupInputComponent();
@@ -89,23 +140,24 @@ void AFarmerController::OnLeftClick()
 
 void AFarmerController::OnRightClick()
 {
-	FHitResult HitResult;
-	GetHitResultUnderCursorByChannel(
-		ETraceTypeQuery::TraceTypeQuery1,
-		false,
-		HitResult
-	);
-
-	if (HitResult.bBlockingHit)
+	AInteractiveActor*ActorHit=GetInteractiveActor();
+	if (ActorHit)
 	{
-		if (FarmerBase)
+		auto FarmCell = Cast<AFarmCell>(ActorHit);
+		if (FarmCell)
 		{
-			FarmerBase->MoveToLocation(HitResult.Location);
+			ShowFarmActionsWidget(FarmCell);
 		}
+		
 	}
+	else
+	{
+		FarmerBase->MoveToLocation(Location);
+	}
+	
 }
 
-AInteractiveActor* AFarmerController::GetInteractiveActor() const
+AInteractiveActor* AFarmerController::GetInteractiveActor() 
 {
 	FHitResult HitResult;
 	GetHitResultUnderCursorByChannel(
@@ -113,12 +165,12 @@ AInteractiveActor* AFarmerController::GetInteractiveActor() const
 		false,
 		HitResult
 	);
-
+	Location=HitResult.ImpactPoint;
 	if (HitResult.bBlockingHit)
 	{
 		// Debug para ver el raycast
 		DrawDebugSphere(GetWorld(), HitResult.ImpactPoint, 25.f, 12, FColor::Green, false, 2.0f);
-
+		
 		return Cast<AFarmCell>(HitResult.GetActor());
 	}
 

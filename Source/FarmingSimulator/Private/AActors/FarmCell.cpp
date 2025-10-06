@@ -34,20 +34,15 @@ void AFarmCell::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetim
 	DOREPLIFETIME(AFarmCell, bPlow);
 }
 
-void AFarmCell::OnRep_UpdateFarm()
-{
-	
-}
-
 void AFarmCell::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
 }
 
-void AFarmCell::ServerHarvest_Implementation(APlayerStateBase*PlayerStateBase)
+void AFarmCell::ServerHarvest_Implementation(APlayerStateBase*PlayerStateBase,AFarmerController*PC)
 {
-	if (PlayerStateBase)
+	if (PlayerStateBase&&PC)
 	{
 		if (FarmCellState==EFarmCellState::ReadyToHarvest)
 		{
@@ -56,12 +51,13 @@ void AFarmCell::ServerHarvest_Implementation(APlayerStateBase*PlayerStateBase)
 			WaterLevel=0;
 			TimeToHarvest=0;
 			PlayerStateBase->Server_AddPlants(1);
+			PC->ServerMoveToLocation(this->GetActorLocation());
 		}
 	}
 	
 }
 
-void AFarmCell::ServerSow_Implementation(APlayerStateBase*PlayerStateBase)
+void AFarmCell::ServerSow_Implementation(APlayerStateBase*PlayerStateBase,AFarmerController*PC)
 {
 	if (PlayerStateBase)
 	{
@@ -70,26 +66,29 @@ void AFarmCell::ServerSow_Implementation(APlayerStateBase*PlayerStateBase)
 			FarmCellState = EFarmCellState::Growing;
 			PlayerStateBase->Server_AddSeeds(-1);
 			TimeToHarvest=10;
+			PC->ServerMoveToLocation(this->GetActorLocation());
 		}
 	}
 
 }
 
-void AFarmCell::ServerPlow_Implementation(APlayerStateBase*PlayerStateBase)
+void AFarmCell::ServerPlow_Implementation(APlayerStateBase*PlayerStateBase,AFarmerController*PC)
 {
-	if (!bPlow&&PlayerStateBase)
+	if (!bPlow&&PlayerStateBase&&PC)
 	{
+		PC->ServerMoveToLocation(this->GetActorLocation());
 		bPlow=true;
 	}
 
 }
 
-void AFarmCell::ServerWateringPlants_Implementation(APlayerStateBase*PlayerStateBase)
+void AFarmCell::ServerWateringPlants_Implementation(APlayerStateBase*PlayerStateBase,AFarmerController*PC)
 {
-	if (PlayerStateBase)
+	if (PlayerStateBase&&PC)
 	{
 		if (PlayerStateBase->GetWater()>0)
 		{
+			PC->ServerMoveToLocation(this->GetActorLocation());
 			WaterLevel++;
 			PlayerStateBase->Server_AddWater(-1);
 		}
