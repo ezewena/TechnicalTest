@@ -33,7 +33,7 @@ public:
 	void ServerInteractWithFarm();
 	UPROPERTY(Replicated,BlueprintReadWrite,Category="Farmer")
 	FVector LocationToMove;
-	UPROPERTY(BlueprintReadWrite)
+	UPROPERTY(BlueprintReadWrite, Replicated)
 	AFarmCell * FarmCell = nullptr;
 	UFUNCTION(Server, Reliable,BlueprintCallable)
 	void ServerMoveToLocation(FVector Direction);

@@ -12,24 +12,18 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3f09255c-f521-446a-9055-ddc0251a9028" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.FarmingSimulator/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.FarmingSimulator/.idea/.name" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.FarmingSimulator/.idea/indexLayout.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.FarmingSimulator/.idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.FarmingSimulator/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.FarmingSimulator/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Config/DefaultEngine.ini" beforeDir="false" afterPath="$PROJECT_DIR$/Config/DefaultEngine.ini" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/Blueprints/AActors/BP_FarmCell.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blueprints/AActors/BP_FarmCell.uasset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/Blueprints/AActors/BP_FarmGrid.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blueprints/AActors/BP_FarmGrid.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Blueprints/Character/BP_FarmerController.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blueprints/Character/BP_FarmerController.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Blueprints/Character/BP_FarmerCharacter.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blueprints/Character/BP_FarmerCharacter.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Blueprints/Character/FarmerController/BP_AIFarmerController.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blueprints/Character/FarmerController/BP_AIFarmerController.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Blueprints/Interface/BPI_FarmerActions.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blueprints/Interface/BPI_FarmerActions.uasset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/Blueprints/WB/BP_FarmActionsToDo.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blueprints/WB/BP_FarmActionsToDo.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Characters/Mannequins/Meshes/SK_Mannequin.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Characters/Mannequins/Meshes/SK_Mannequin.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/StarterContent/Architecture/Floor_400x400.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/StarterContent/Architecture/Floor_400x400.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/StarterContent/HDRI/HDRI_Epic_Courtyard_Daylight.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/StarterContent/HDRI/HDRI_Epic_Courtyard_Daylight.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Level/leveltest.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Level/leveltest.umap" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/FarmingSimulator/Private/Character/FarmerBase.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/FarmingSimulator/Private/Character/FarmerBase.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/FarmingSimulator/Private/Controllers/FarmerController.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/FarmingSimulator/Private/Controllers/FarmerController.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/FarmingSimulator/Private/Pawn/PlayerPawn.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/FarmingSimulator/Private/Pawn/PlayerPawn.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/FarmingSimulator/Public/Character/FarmerBase.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/FarmingSimulator/Public/Character/FarmerBase.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/FarmingSimulator/Public/Controllers/FarmerController.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/FarmingSimulator/Public/Controllers/FarmerController.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/FarmingSimulator/Public/Pawn/PlayerPawn.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/FarmingSimulator/Public/Pawn/PlayerPawn.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/FarmingSimulator/Public/UMG/FarmActionsToDo.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/FarmingSimulator/Public/UMG/FarmActionsToDo.h" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -61,10 +55,19 @@
     <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="cidr-memory-view://10" root0="FORCE_HIGHLIGHTING" />
+    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="cidr-memory-view://6" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Intermediate/Build/Win64/UnrealEditor/Inc/FarmingSimulator/UHT/FarmerBase.gen.cpp" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../UE_5.3/Engine/Intermediate/Build/Win64/UnrealEditor/Inc/IrisCore/UHT/IrisObjectReferencePackageMap.generated.h" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../UE_5.3/Engine/Source/Editor/UnrealEd/Private/Kismet2/KismetReinstanceUtilities.cpp" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/../UE_5.3/Engine/Source/Runtime/AIModule/Private/AIController.cpp" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/../UE_5.3/Engine/Source/Runtime/AIModule/Private/BehaviorTree/Tasks/BTTask_WaitBlackboardTime.cpp" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/../UE_5.3/Engine/Source/Runtime/Core/Public/Misc/MTAccessDetector.h" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../UE_5.3/Engine/Source/Runtime/Core/Public/Templates/SharedPointer.h" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/../UE_5.3/Engine/Source/Runtime/Engine/Classes/GameFramework/Character.h" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../UE_5.3/Engine/Source/Runtime/Engine/Classes/GameFramework/GameModeBase.h" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../UE_5.3/Engine/Source/Runtime/Engine/Classes/GameFramework/PlayerController.h" root0="FORCE_HIGHLIGHTING" />
   </component>
@@ -194,6 +197,7 @@
       <workItem from="1759808514562" duration="407000" />
       <workItem from="1759809828919" duration="421000" />
       <workItem from="1759810272346" duration="6526000" />
+      <workItem from="1759849866871" duration="5614000" />
     </task>
     <servers />
   </component>

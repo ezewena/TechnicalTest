@@ -103,9 +103,9 @@ void AFarmerController::OnRightClick()
 		auto FarmCell = Cast<AFarmCell>(ActorHit);
 		if (FarmCell)
 		{
-			//ShowFarmActionsWidget(FarmCell);
 			ShowFarmActionWidget(FarmerBase,FarmCell);
 			FarmerBase->FarmCell = FarmCell;
+			//FarmerBase->ServerMoveToLocation(Location);
 		}
 		
 	}

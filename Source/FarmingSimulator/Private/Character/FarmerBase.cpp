@@ -15,13 +15,20 @@ AFarmerBase::AFarmerBase()
 	PrimaryActorTick.bCanEverTick = true;
 	bReplicates = true;
 	ActionsToDo = EActionsToDo::Nothing;
-	
+	AutoPossessAI = EAutoPossessAI::PlacedInWorldOrSpawned;
 }
 
 void AFarmerBase::MoveToLocation(FVector Location)
 {
-	UAIBlueprintHelperLibrary::SimpleMoveToLocation(GetController(), Location);
-
+	
+		if (AAIController* AICon = Cast<AAIController>(GetController()))
+		{
+			FAIMoveRequest MoveReq;
+			MoveReq.SetGoalLocation(Location);
+			MoveReq.SetAcceptanceRadius(5.f);
+			FNavPathSharedPtr NavPath;
+			AICon->MoveTo(MoveReq, &NavPath);
+		}
 }
 
 void AFarmerBase::ServerMoveToLocation_Implementation(FVector Location)
@@ -73,6 +80,7 @@ void AFarmerBase::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifet
 	DOREPLIFETIME(AFarmerBase,bIsBusy);
 	DOREPLIFETIME(AFarmerBase,ActionsToDo);
 	DOREPLIFETIME(AFarmerBase,LocationToMove);
+	DOREPLIFETIME(AFarmerBase,FarmCell);
 }
 // Called every frame
 void AFarmerBase::Tick(float DeltaTime)

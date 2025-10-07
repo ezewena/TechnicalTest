@@ -4,13 +4,13 @@
 
 #include "CoreMinimal.h"
 #include "Blueprint/UserWidget.h"
+#include "AActors/FarmCell.h"
+#include "Character/FarmerBase.h"
 #include "FarmActionsToDo.generated.h"
 
 /**
  * 
  */
-class AFarmerBase;
-class AFarmCell;
 UCLASS()
 class FARMINGSIMULATOR_API UFarmActionsToDo : public UUserWidget
 {
