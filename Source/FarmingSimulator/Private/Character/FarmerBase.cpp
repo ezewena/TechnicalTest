@@ -14,7 +14,7 @@ AFarmerBase::AFarmerBase()
  	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 	bReplicates = true;
-	bAlwaysRelevant = true;
+	ActionsToDo = EActionsToDo::Nothing;
 	
 }
 
@@ -40,6 +40,26 @@ void AFarmerBase::ServerInteractWithFarm_Implementation()
 	}
 }
 
+void AFarmerBase::MulticastMoveToLocation_Implementation(FVector Direction)
+{
+	
+}
+
+void AFarmerBase::ServerPlayMontage_Implementation(UAnimMontage* Montage)
+{
+	if (HasAuthority())
+	{
+		PlayAnimMontage(Montage);
+		return;
+	}
+	MulticastPlayMontage(Montage);
+}
+
+void AFarmerBase::MulticastPlayMontage_Implementation(UAnimMontage* Montage)
+{
+	PlayAnimMontage(Montage);
+}
+
 // Called when the game starts or when spawned
 void AFarmerBase::BeginPlay()
 {
@@ -51,6 +71,8 @@ void AFarmerBase::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifet
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 	DOREPLIFETIME(AFarmerBase,bIsBusy);
+	DOREPLIFETIME(AFarmerBase,ActionsToDo);
+	DOREPLIFETIME(AFarmerBase,LocationToMove);
 }
 // Called every frame
 void AFarmerBase::Tick(float DeltaTime)

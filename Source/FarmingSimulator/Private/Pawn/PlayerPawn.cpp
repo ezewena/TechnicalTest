@@ -46,9 +46,6 @@ void APlayerPawn::SetupPlayerInputComponent(UInputComponent* PlayerInputComponen
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 	PlayerInputComponent->BindAxis("MoveForward", this, &APlayerPawn::MoveForward);
 	PlayerInputComponent->BindAxis("MoveRight", this, &APlayerPawn::MoveRight);
-	PlayerInputComponent->BindAction("ZoomIn", IE_Pressed, this, &APlayerPawn::ZoomIn);
-	PlayerInputComponent->BindAction("ZoomOut", IE_Pressed, this, &APlayerPawn::ZoomOut);
-
 }
 
 void APlayerPawn::MoveForward(float Value)
@@ -67,15 +64,4 @@ void APlayerPawn::MoveRight(float Value)
 	}
 }
 
-void APlayerPawn::ZoomIn()
-{
-	SpringArm->TargetArmLength = FMath::Clamp(SpringArm->TargetArmLength - ZoomStep, MinZoom, MaxZoom);
-
-}
-
-void APlayerPawn::ZoomOut()
-{
-	SpringArm->TargetArmLength = FMath::Clamp(SpringArm->TargetArmLength + ZoomStep, MinZoom, MaxZoom);
-
-}
 

@@ -33,8 +33,6 @@ protected:
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 	void MoveForward(float Value);
 	void MoveRight(float Value);
-	void ZoomIn();
-	void ZoomOut();
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;

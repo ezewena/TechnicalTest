@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "AActors/FarmCell.h"
 #include "AActors/InteractiveActor.h"
 #include "GameFramework/PlayerController.h"
 #include "UMG/FarmActionsToDo.h"
@@ -13,23 +14,17 @@
  * 
  */
 class AFarmerBase;
+class AFarmCell;
 UCLASS()
 class FARMINGSIMULATOR_API AFarmerController : public APlayerController
 {
 	GENERATED_BODY()
 public:
 	AFarmerController();
-	UFUNCTION(Server, Reliable,BlueprintCallable)
-	void ServerMoveToLocation(FVector Direction);
-	UFUNCTION(NetMulticast, Reliable,BlueprintCallable)
-	void MulticastMoveToLocation(FVector Direction);
-
-	UFUNCTION(Server, Reliable,BlueprintCallable)
-	void ServerPlayMontage(UAnimMontage*Montage);
-	UFUNCTION(NetMulticast, Reliable,BlueprintCallable)
-	void MulticastPlayMontage(UAnimMontage*Montage);
 	UFUNCTION(BlueprintCallable, Category="Farm")
 	void ShowFarmInfoWidget(int32 WaterLevel, bool bIsPlowed, float TimeToHarvest);
+	UFUNCTION(BlueprintCallable, Category="Farm")
+	void ShowFarmActionWidget(AFarmerBase*FarmerBase, AFarmCell*FarmCell);
 	UFUNCTION(BlueprintCallable, Category="Farm")
 	void HideFarmInfoWidget();
 	UPROPERTY()

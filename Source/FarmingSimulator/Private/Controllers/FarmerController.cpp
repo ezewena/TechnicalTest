@@ -2,12 +2,6 @@
 
 
 #include "Controllers/FarmerController.h"
-
-#include "AIController.h"
-#include "Blueprint/AIBlueprintHelperLibrary.h"
-#include "NavigationPath.h"
-#include "Navigation/PathFollowingComponent.h"
-#include "NavigationSystem.h"
 #include "AActors/FarmCell.h"
 #include "Character/FarmerBase.h"
 #include "Kismet/GameplayStatics.h"
@@ -15,45 +9,6 @@
 AFarmerController::AFarmerController()
 {
 	FarmerBase = Cast<AFarmerBase>(UGameplayStatics::GetActorOfClass(GetWorld(), AFarmerBase::StaticClass()));
-}
-
-void AFarmerController::MulticastMoveToLocation_Implementation(FVector Direction)
-{
-	if (FarmerBase)
-	{
-		FarmerBase->MoveToLocation(Direction);
-	}
-	
-}
-
-void AFarmerController::ServerMoveToLocation_Implementation(FVector Direction)
-{
-	if (HasAuthority())
-	{
-		if (!FarmerBase) return;
-		FarmerBase->MoveToLocation(Direction);
-		return;
-	}
-		MulticastMoveToLocation_Implementation(Direction);
-}
-
-void AFarmerController::ServerPlayMontage_Implementation(UAnimMontage* Montage)
-{
-	if (HasAuthority())
-	{
-		if (!FarmerBase)return; 
-		FarmerBase->PlayAnimMontage(Montage);
-		return;
-	}
-	MulticastPlayMontage(Montage);
-}
-
-void AFarmerController::MulticastPlayMontage_Implementation(UAnimMontage* Montage)
-{
-	if (FarmerBase)
-	{
-		FarmerBase->PlayAnimMontage(Montage);
-	}
 }
 
 void AFarmerController::ShowFarmInfoWidget(int32 WaterLevel, bool bIsPlowed, float TimeToHarvest)
@@ -69,6 +24,23 @@ void AFarmerController::ShowFarmInfoWidget(int32 WaterLevel, bool bIsPlowed, flo
 	{
 		FarmInfoWidgetInstance->SetVisibility(ESlateVisibility::Visible);
 		FarmInfoWidgetInstance->UpdateFarmData(WaterLevel, bIsPlowed, TimeToHarvest); 
+	}
+}
+
+void AFarmerController::ShowFarmActionWidget(AFarmerBase* Farmer, AFarmCell* FarmCell)
+{
+	if (!FarmActionsWidgetInstance && FarmActionsWidgetClass)
+	{
+		FarmActionsWidgetInstance = CreateWidget<UFarmActionsToDo>(this, FarmActionsWidgetClass);
+		if (FarmActionsWidgetInstance)
+			FarmActionsWidgetInstance->AddToViewport();
+	}
+
+	if (FarmActionsWidgetInstance)
+	{
+		FarmActionsWidgetInstance->SetVisibility(ESlateVisibility::Visible);
+		FarmActionsWidgetInstance->AFarmerBaseRef = Farmer;
+		FarmActionsWidgetInstance->FarmCellClicked = FarmCell;
 	}
 }
 
@@ -132,12 +104,10 @@ void AFarmerController::OnRightClick()
 		if (FarmCell)
 		{
 			//ShowFarmActionsWidget(FarmCell);
+			ShowFarmActionWidget(FarmerBase,FarmCell);
+			FarmerBase->FarmCell = FarmCell;
 		}
 		
-	}
-	else
-	{
-		FarmerBase->MoveToLocation(Location);
 	}
 	
 }
