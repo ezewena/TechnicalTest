@@ -38,6 +38,7 @@ void AFarmerController::ShowFarmActionWidget(AFarmerBase* Farmer, AFarmCell* Far
 
 	if (FarmActionsWidgetInstance)
 	{
+		FarmActionsWidgetInstance->AddToViewport();
 		FarmActionsWidgetInstance->SetVisibility(ESlateVisibility::Visible);
 		FarmActionsWidgetInstance->AFarmerBaseRef = Farmer;
 		FarmActionsWidgetInstance->FarmCellClicked = FarmCell;
@@ -105,11 +106,10 @@ void AFarmerController::OnRightClick()
 		{
 			ShowFarmActionWidget(FarmerBase,FarmCell);
 			FarmerBase->FarmCell = FarmCell;
-			//FarmerBase->ServerMoveToLocation(Location);
+			return;
 		}
-		
 	}
-	
+	FarmerBase->ServerMoveToLocation(Location);
 }
 
 AInteractiveActor* AFarmerController::GetInteractiveActor() 

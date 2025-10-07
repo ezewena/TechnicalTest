@@ -39,7 +39,6 @@ void AFarmCell::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 
 }
-
 void AFarmCell::ServerHarvest_Implementation(APlayerStateBase*PlayerStateBase)
 {
 	if (PlayerStateBase)
@@ -51,6 +50,7 @@ void AFarmCell::ServerHarvest_Implementation(APlayerStateBase*PlayerStateBase)
 			WaterLevel=0;
 			TimeToHarvest=0;
 			PlayerStateBase->Server_AddPlants(1);
+			ModifyCell("Harvest");
 			
 		}
 	}
@@ -66,6 +66,7 @@ void AFarmCell::ServerSow_Implementation(APlayerStateBase*PlayerStateBase)
 			FarmCellState = EFarmCellState::Growing;
 			PlayerStateBase->Server_AddSeeds(-1);
 			TimeToHarvest=10;
+			ModifyCell("Sow");
 		}
 	}
 
@@ -76,6 +77,7 @@ void AFarmCell::ServerPlow_Implementation(APlayerStateBase*PlayerStateBase)
 	if (!bPlow&&PlayerStateBase)
 	{
 		bPlow=true;
+		ModifyCell("Plow");
 	}
 
 }
@@ -88,6 +90,7 @@ void AFarmCell::ServerWateringPlants_Implementation(APlayerStateBase*PlayerState
 		{
 			WaterLevel++;
 			PlayerStateBase->Server_AddWater(-1);
+			ModifyCell("Watering");
 		}
 	}
 }

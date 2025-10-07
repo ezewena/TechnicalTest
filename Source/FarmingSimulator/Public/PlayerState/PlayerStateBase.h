@@ -23,11 +23,11 @@ class FARMINGSIMULATOR_API APlayerStateBase : public APlayerState
 	UPROPERTY(Replicated, BlueprintReadOnly)
 	int32 Plants;
 	public:
-	UFUNCTION(Server, Reliable)
+	UFUNCTION(Server, Reliable,blueprintCallable)
 	void Server_AddWater(int32 Amount);
-	UFUNCTION(Server, Reliable)
+	UFUNCTION(Server, Reliable,blueprintCallable)
 	void Server_AddSeeds(int32 Amount);
-	UFUNCTION(Server, Reliable)
+	UFUNCTION(Server, Reliable,blueprintCallable)
 	void Server_AddPlants(int32 Amount);
 	
 	UFUNCTION(BlueprintCallable)

@@ -42,6 +42,8 @@ protected:
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
+	UFUNCTION(BlueprintImplementableEvent)
+	void ModifyCell(const FString& Mensaje);
 	UFUNCTION(Reliable,Server,BlueprintCallable)
 	void ServerWateringPlants(APlayerStateBase*PlayerStateBase);
 	UFUNCTION(Reliable,Server,BlueprintCallable)

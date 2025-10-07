@@ -46,8 +46,7 @@ public:
 	void OnRightClick();
 
 	AInteractiveActor*GetInteractiveActor();
-
 	UPROPERTY(EditAnywhere,BlueprintReadWrite ,Category="Farmer")
 	AFarmerBase* FarmerBase;
-	
+
 };
