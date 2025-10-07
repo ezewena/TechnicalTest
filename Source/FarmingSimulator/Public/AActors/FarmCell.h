@@ -4,7 +4,6 @@
 
 #include "CoreMinimal.h"
 #include "InteractiveActor.h"
-#include "Controllers/FarmerController.h"
 #include "GameFramework/Actor.h"
 #include "Net/UnrealNetwork.h" 
 #include "FarmCell.generated.h"
@@ -44,13 +43,13 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 	UFUNCTION(Reliable,Server,BlueprintCallable)
-	void ServerWateringPlants(APlayerStateBase*PlayerStateBase,AFarmerController*PC);
+	void ServerWateringPlants(APlayerStateBase*PlayerStateBase);
 	UFUNCTION(Reliable,Server,BlueprintCallable)
-	void ServerPlow(APlayerStateBase*PlayerStateBase,AFarmerController*PC);
+	void ServerPlow(APlayerStateBase*PlayerStateBase);
 	UFUNCTION(Reliable,Server,BlueprintCallable)
-	void ServerSow(APlayerStateBase*PlayerStateBase,AFarmerController*PC);
+	void ServerSow(APlayerStateBase*PlayerStateBase);
 	UFUNCTION(Reliable,Server,BlueprintCallable)
-	void ServerHarvest(APlayerStateBase*PlayerStateBase,AFarmerController*PC);
+	void ServerHarvest(APlayerStateBase*PlayerStateBase);
 	bool IsPlow() const { return bPlow; }
 	int32 GetWaterLevel() const { return WaterLevel; }
 	EFarmCellState GetPlantState() const { return FarmCellState; }

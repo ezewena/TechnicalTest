@@ -72,21 +72,6 @@ void AFarmerController::ShowFarmInfoWidget(int32 WaterLevel, bool bIsPlowed, flo
 	}
 }
 
-void AFarmerController::ShowFarmActionsWidget(AFarmCell*FarmCell)
-{
-	if (!FarmActionsWidgetInstance && FarmActionsWidgetClass)
-	{
-		FarmActionsWidgetInstance = CreateWidget<UFarmActionsToDo>(this, FarmActionsWidgetClass);
-		if (FarmActionsWidgetInstance)
-			FarmActionsWidgetInstance->AddToViewport();
-	}
-
-	if (FarmActionsWidgetInstance)
-	{
-		FarmActionsWidgetInstance->SetVisibility(ESlateVisibility::Visible);
-		FarmActionsWidgetInstance->FarmCellRef = FarmCell;
-	}
-}
 
 void AFarmerController::HideFarmInfoWidget()
 {
@@ -146,7 +131,7 @@ void AFarmerController::OnRightClick()
 		auto FarmCell = Cast<AFarmCell>(ActorHit);
 		if (FarmCell)
 		{
-			ShowFarmActionsWidget(FarmCell);
+			//ShowFarmActionsWidget(FarmCell);
 		}
 		
 	}

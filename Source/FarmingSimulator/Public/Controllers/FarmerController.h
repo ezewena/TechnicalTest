@@ -24,13 +24,12 @@ public:
 	UFUNCTION(NetMulticast, Reliable,BlueprintCallable)
 	void MulticastMoveToLocation(FVector Direction);
 
-	UFUNCTION(NetMulticast, Reliable,BlueprintCallable)
-	void ServerPlayMontage(UAnimMontage*Montage);
 	UFUNCTION(Server, Reliable,BlueprintCallable)
+	void ServerPlayMontage(UAnimMontage*Montage);
+	UFUNCTION(NetMulticast, Reliable,BlueprintCallable)
 	void MulticastPlayMontage(UAnimMontage*Montage);
 	UFUNCTION(BlueprintCallable, Category="Farm")
 	void ShowFarmInfoWidget(int32 WaterLevel, bool bIsPlowed, float TimeToHarvest);
-	void ShowFarmActionsWidget(AFarmCell*FarmCell);
 	UFUNCTION(BlueprintCallable, Category="Farm")
 	void HideFarmInfoWidget();
 	UPROPERTY()
